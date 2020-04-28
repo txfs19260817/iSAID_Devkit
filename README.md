@@ -106,3 +106,11 @@
         ```cd ../evaluate```
     3. Given json of predictions and json of val set ground truth (obtained after preprocess.py), Compute Average Precision
         ```python evaluate.py ```
+
+5. **Panoptic experiment using Seamseg**
+    1. Use the command below to convert the dataset into Cityscapes-format
+    ```
+    python cvt4iSAID.py --input <path/to/(train,val)/images> --output <iSAID_cityscapes_id> --noempty
+    ```
+    2. Use the script provided by Seamseg project to convert the dataset to Seamseg-format
+    
