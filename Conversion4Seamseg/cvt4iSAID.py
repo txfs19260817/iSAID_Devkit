@@ -5,6 +5,7 @@ import argparse
 import multiprocessing
 import numpy as np
 import os
+import shutil
 
 
 #--------------------------------------------------------------------------------
@@ -20,8 +21,14 @@ parser.add_argument(
 parser.add_argument(
     "--outputs",
     type=str,
-    default="iSAID_id",
+    default="gtFine/",
     help="converted images output directory"
+)
+parser.add_argument(
+    "--neworigin",
+    type=str,
+    default="origin/",
+    help="copied input images directory"
 )
 parser.add_argument(
     "--noempty",
@@ -99,6 +106,7 @@ i_class = list(range(1, 16))
 # paths
 inputs = args.inputs
 outputs = args.outputs
+neworigin = args.neworigin
 
 # color to id
 color2id = {}
@@ -147,12 +155,16 @@ def worker(name):
 
     # save
     Image.fromarray(ins_new).save(ip.replace(inputs, outputs))
+    # copy origin
+    origin_path = name + '.png'
+    shutil.copyfile(origin_path, origin_path.replace(inputs, neworigin))
 
 
 def main():
     # make output dir if not exist
     try:
         os.mkdir(outputs)
+        os.mkdir(neworigin)
     except:
         pass
 
